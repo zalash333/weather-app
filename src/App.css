@@ -1,33 +1,164 @@
 .App {
-  text-align: center;
+    text-align: center;
+    background-color: #282c34;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+    pointer-events: none;
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    font-size: 150%;
+    font-weight: 900;
+    animation: shadow infinite 2s linear;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
+}
+
+@keyframes shadow {
+    from {
+        text-shadow: 0 0 3px white;
+        opacity: 1;
+    }
+    50% {
+        text-shadow: 0 0 20px white;
+        opacity: 0.1;
+
+    }
+    to {
+        text-shadow: 0 0 3px white;
+        opacity: 1;
+    }
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.drop-down-menu {
+    margin-left: 25%;
+    display: block;
+    background: white;
+    color: black;
+    width: 50%;
+    opacity: 0.7;
+    z-index: 10;
+    position: fixed;
+    border-radius: 0px 0px 5px 5px
+}
+
+.display-none {
+    display: none;
+}
+
+.input-style {
+    border: solid 2px silver;
+    width: 50%;
+    height: 50px;
+    text-align: -webkit-center;
+    font-size: 27px;
+    outline: none;
+    border-radius: 10px 10px 5px 5px;
+}
+
+.items:hover {
+    background: silver;
+    cursor: pointer;
+}
+
+.active {
+    border: solid 3px #00d000;
+}
+
+.error {
+    border: solid 2px red;
+}
+
+.button {
+    width: 44px;
+    height: 56px;
+    border-radius: 3px;
+}
+
+.block-input-drop-menu {
+    width: 100%;
+}
+
+.massage-request {
+
+}
+
+.block-nameCity-codeCountry {
+    display: flex;
+}
+
+.img-weather {
+    width: 150px;
+}
+
+.block-information-weather {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.temp-weather {
+    margin-top: 10px;
+    font-size: 55px;
+    font-weight: 900;
+}
+
+.city-weather {
+    font-size: 52px;
+    font-weight: 500;
+    text-shadow: 0 0 3px black;
+}
+
+.country-weather {
+    text-shadow: 0 0 3px black;
+}
+
+.block-header-information {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.description-weather {
+    padding: 26px 0 0 11px;
+    color: #adadad;
+    font-size: 20px;
+    text-shadow: 0 0 3px black;
+}
+
+.block-all-header {
+    margin-bottom: 2%;
+}
+
+.block-style {
+    width: 70%;
+    height: 100%;
+    background: silver;
+    margin: 0 10% 0 10%;
+    border-radius: 19px;
+    box-shadow: 0 0 10px greenyellow;
+    border: 1px solid black;
 }
