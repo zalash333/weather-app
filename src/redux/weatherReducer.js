@@ -44,9 +44,9 @@ const initialState = {
     massageBrain:''
 };
 
-export const requestCity = (value) => async (dispatch) => {
+export const requestCity = (value) => (dispatch) => {
     const API_KEY = "c3bd9e705a169cb812e91bad08db54bb";
-    await axiosInstance.get(`weather?q=${value}&appid=${API_KEY}&units=metric`)
+     axiosInstance.get(`weather?q=${value}&appid=${API_KEY}&units=metric`)
         .then(e => {
             dispatch(toggleStyleInput(true));
             dispatch(requestCityAction(e.data.name));
@@ -67,10 +67,10 @@ export const brainRun = () => (dispatch, getState) => {
     });
 };
 
-export const getItemsInBrains = () => async (dispatch) => {
+export const getItemsInBrains = () => (dispatch) => {
     let items = JSON.parse(localStorage.getItem(CITY));
-    if (items) await dispatch(getItemsInBrainAction(items));
-    // if(items) await dispatch(brainRun())
+    if (items) dispatch(getItemsInBrainAction(items));
+    if(items) dispatch(brainRun())
     // проект подглючивает при использовании Brain js, для теста работы, раскоментить
 };
 
