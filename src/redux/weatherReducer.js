@@ -70,7 +70,8 @@ export const brainRun = () => (dispatch, getState) => {
 export const getItemsInBrains = () => async (dispatch) => {
     let items = JSON.parse(localStorage.getItem(CITY));
     if (items) await dispatch(getItemsInBrainAction(items));
-    if(items) await dispatch(brainRun())
+    // if(items) await dispatch(brainRun())
+    // проект подглючивает при использовании Brain js, для теста работы, раскоментить
 };
 
 const setCityLocal = () => (dispatch, getState) => {
