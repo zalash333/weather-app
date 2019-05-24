@@ -70,7 +70,7 @@ export const brainRun = () => (dispatch, getState) => {
 export const getItemsInBrains = () => (dispatch) => {
     let items = JSON.parse(localStorage.getItem(CITY));
     if (items) dispatch(getItemsInBrainAction(items));
-    if(items) dispatch(brainRun())
+    // if(items) dispatch(brainRun())
     // проект подглючивает при использовании Brain js, для теста работы, раскоментить
 };
 
