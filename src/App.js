@@ -10,7 +10,7 @@ import {
     runCurrentItems
 } from "./redux/weatherReducer";
 
-let App = ({value,brainItems,massageBrain, getItemsInBrains, items, addTextInInput, addItems, getCityLocal, runCurrentItems, requestCity, styleInputToggle, massage, toggleMassage, city, response, currentCityWeather}) => {
+let App = ({value, brainItems, massageBrain, getItemsInBrains, items, addTextInInput, addItems, getCityLocal, runCurrentItems, requestCity, styleInputToggle, massage, toggleMassage, city, response, currentCityWeather}) => {
     useEffect(() => {
         getCityLocal();
         getItemsInBrains();
@@ -50,7 +50,7 @@ let App = ({value,brainItems,massageBrain, getItemsInBrains, items, addTextInInp
                     </div>
                 </div>
                 <div className={'block-input-drop-menu'}>
-                    <div>{massageBrain&&toggleMassage?`maybe you meant ${massageBrain}`:''}</div>
+                    <div>{massageBrain && toggleMassage ? `maybe you meant ${massageBrain}` : ''}</div>
                     <input
                         className={`input-style ${value.length > 0 ? `${!styleInputToggle ? 'error' : 'active'}` : ''}`}
                         type={'text'}
@@ -61,10 +61,11 @@ let App = ({value,brainItems,massageBrain, getItemsInBrains, items, addTextInInp
                             setItems(items);
                             setStyle(true)
                         }}
-                        onBlur={(e) => {}}
+                        onBlur={(e) => {
+                        }}
                         onKeyPress={(e) => e.key === 'Enter' && value ? addItems() : ''}/>
                     <div
-                        className={style ? 'drop-down-menu' : 'display-none'}>{itemsCurrent ? itemsCurrent.map((el,i) =>
+                        className={style ? 'drop-down-menu' : 'display-none'}>{itemsCurrent ? itemsCurrent.map((el, i) =>
                         i < 8 ? <div
                             onClick={() => {
                                 onTextChanged(el.value);
@@ -117,7 +118,7 @@ const mapDispatchToProps = (dispatch) => ({
     requestCity(value) {
         dispatch(requestCity(value))
     },
-    getItemsInBrains(){
+    getItemsInBrains() {
         dispatch(getItemsInBrains())
     }
 });
