@@ -1,5 +1,9 @@
 import axiosInstance from "../serverRequest/axiosServerRequest";
-import {net} from "../countres/brainjs";
+import * as axios from "axios";
+
+
+const CancelToken = axios.CancelToken;
+let cancel;
 
 const CITY = 'CITY';
 const ADD_TEXT_IN_INPUT = 'ADD_TEXT_IN_INPUT';
@@ -24,10 +28,6 @@ const CLEAR_VALUE = 'CLEAR_VALUE';
 const clearValue = () => ({type: CLEAR_VALUE});
 export const CURRENT_CITY_WEATHER = 'CURRENT_CITY_WEATHER';
 const currentCityWeatherAction = () => ({type: CURRENT_CITY_WEATHER});
-export const GET_ITEMS_IN_BRAIN = 'GET_ITEMS_IN_BRAIN';
-const getItemsInBrainAction = (items) => ({type: GET_ITEMS_IN_BRAIN, items});
-export const SET_MASSAGE_BRAIN = 'SET_MASSAGE_BRAIN';
-const setMassageBrainAction = (massage) => ({type: SET_MASSAGE_BRAIN, massage});
 
 
 const initialState = {
@@ -40,13 +40,17 @@ const initialState = {
     response: '',
     contentItemsBoolean: false,
     currentCityWeather: '',
-    brainItems: [],
-    massageBrain:''
 };
 
 export const requestCity = (value) => (dispatch) => {
     const API_KEY = "c3bd9e705a169cb812e91bad08db54bb";
-     axiosInstance.get(`weather?q=${value}&appid=${API_KEY}&units=metric`)
+    cancel && cancel();
+        axiosInstance.get(`weather?q=${value}&appid=${API_KEY}&units=metric`,{
+         cancelToken: new CancelToken(
+             function executor(c) {
+                 cancel = c;
+             })
+     })
         .then(e => {
             dispatch(toggleStyleInput(true));
             dispatch(requestCityAction(e.data.name));
@@ -54,24 +58,8 @@ export const requestCity = (value) => (dispatch) => {
         })
         .catch((error) => {
             dispatch(toggleStyleInput(false));
-            dispatch(massageResponse(error.response.data.message))
+            dispatch(massageResponse(error.response && error.response.data && error.response.data.message))
         })
-};
-
-
-export const brainRun = () => (dispatch, getState) => {
-    let brainItems = getState().weather.brainItems;
-    net.train(brainItems, {
-        iterations: 2000,
-        timeout: 10
-    });
-};
-
-export const getItemsInBrains = () => (dispatch) => {
-    let items = JSON.parse(localStorage.getItem(CITY));
-    if (items) dispatch(getItemsInBrainAction(items));
-    // if(items) dispatch(brainRun())
-    // проект подглючивает при использовании Brain js, для теста работы, раскоментить
 };
 
 const setCityLocal = () => (dispatch, getState) => {
@@ -94,28 +82,13 @@ export const addItems = () => (dispatch, getState) => {
         else dispatch(clearValue());
         dispatch(currentCityWeatherAction());
         dispatch(setCityLocal());
-        dispatch(getItemsInBrains())
     } else {
         dispatch(toggleMassage());
-        dispatch(setMassageBrainAction(net.run(value)))
     }
 };
 
 const weatherReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_MASSAGE_BRAIN:
-            return {...state,massageBrain:action.massage};
-        case GET_ITEMS_IN_BRAIN:
-            let copyState = {...state};
-            for (let i = 0; action.items.length > i; i++) {
-                let box = '';
-                let ava = action.items[i].value.split('');
-                for (let e = 0; ava.length > e; e++) {
-                    box += ava[e];
-                    copyState.brainItems.push({input: box, output: action.items[i].value})
-                }
-            }
-            return copyState;
         case CURRENT_CITY_WEATHER:
             return {...state, currentCityWeather: state.response};
         case RESPONSE_WEATHER:

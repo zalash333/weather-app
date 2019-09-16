@@ -54,15 +54,26 @@
 }
 
 .drop-down-menu {
-    margin-left: 25%;
+    margin-top: 54px;
+    left: 26%;
     display: block;
     background: white;
     color: black;
     width: 50%;
     opacity: 0.7;
     z-index: 10;
-    position: fixed;
+    position: absolute;
     border-radius: 0px 0px 5px 5px
+}
+.img_style{
+    position: absolute;
+    width: 29px;
+    left: 27%;
+    padding-top: 13px;
+}
+
+.img_style:hover{
+    cursor: pointer;
 }
 
 .display-none {
@@ -70,6 +81,8 @@
 }
 
 .input-style {
+    position: absolute;
+    left: 26%;
     border: solid 2px silver;
     width: 50%;
     height: 50px;
@@ -115,6 +128,7 @@
 }
 
 .block-information-weather {
+    padding-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;

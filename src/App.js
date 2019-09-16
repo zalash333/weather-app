@@ -5,20 +5,26 @@ import {
     addItems,
     addTextInInput,
     getCityLocal,
-    getItemsInBrains,
     requestCity,
     runCurrentItems
 } from "./redux/weatherReducer";
 
-let App = ({value, brainItems, massageBrain, getItemsInBrains, items, addTextInInput, addItems, getCityLocal, runCurrentItems, requestCity, styleInputToggle, massage, toggleMassage, city, response, currentCityWeather}) => {
+let App = ({value, items, addTextInInput, addItems, getCityLocal, runCurrentItems, requestCity, styleInputToggle, massage, toggleMassage, city, response, currentCityWeather}) => {
     useEffect(() => {
         getCityLocal();
-        getItemsInBrains();
-    }, []);
+    }, [getCityLocal]);
     const [style, setStyle] = useState(true);
     const [itemsCurrent, setItems] = useState([]);
+    const [errorMessage, setErrorMessage] = useState(false);
     const onTextChanged = (e) => {
-        const values = typeof e === 'string' ? e : e.target.value;
+        let values = typeof e === 'string' ? e : e.target.value;
+        values = values.replace(/[^a-zA-Z ]/g,'');
+        if(e && e.target && e.target.value.length !== values.length){
+            setErrorMessage(true)
+            return ''
+        }else{
+            setErrorMessage(false)
+        }
         requestCity(values);
         addTextInInput(values);
         let suggestion = [];
@@ -50,9 +56,10 @@ let App = ({value, brainItems, massageBrain, getItemsInBrains, items, addTextInI
                     </div>
                 </div>
                 <div className={'block-input-drop-menu'}>
-                    <div>{massageBrain && toggleMassage ? `maybe you meant ${massageBrain}` : ''}</div>
+                    <div>{errorMessage ? `only letters can be entered` : ''}</div>
+                    <div>
                     <input
-                        className={`input-style ${value.length > 0 ? `${!styleInputToggle ? 'error' : 'active'}` : ''}`}
+                        className={`input-style ${value && value.length > 0 ? `${!styleInputToggle ? 'error' : 'active'}` : ''}`}
                         type={'text'}
                         placeholder={'city'}
                         value={value}
@@ -64,6 +71,8 @@ let App = ({value, brainItems, massageBrain, getItemsInBrains, items, addTextInI
                         onBlur={(e) => {
                         }}
                         onKeyPress={(e) => e.key === 'Enter' && value ? addItems() : ''}/>
+                        <img onClick={()=>value ? addItems() : ''} className={'img_style'} src={'http://s1.iconbird.com/ico/2013/9/450/w256h2561380453921Search256x25632.png'}/>
+                    </div>
                     <div
                         className={style ? 'drop-down-menu' : 'display-none'}>{itemsCurrent ? itemsCurrent.map((el, i) =>
                         i < 8 ? <div
@@ -84,8 +93,6 @@ let App = ({value, brainItems, massageBrain, getItemsInBrains, items, addTextInI
                         <div>{currentCityWeather ? `humidity: ${currentCityWeather.main.humidity}%` : ''}</div>
                     </div>
                 </div>
-                {/*<button className={'button'} onClick={() => value ? addItems() : ''}>click</button>*/}
-                {/*</div>*/}
             </header>
         </div>
     );
@@ -98,9 +105,7 @@ const mapStateToProps = (state) => ({
     toggleMassage: state.weather.toggleMassage,
     city: state.weather.city,
     response: state.weather.response,
-    currentCityWeather: state.weather.currentCityWeather,
-    brainItems: state.weather.brainItems,
-    massageBrain: state.weather.massageBrain
+    currentCityWeather: state.weather.currentCityWeather
 });
 const mapDispatchToProps = (dispatch) => ({
     addTextInInput(value) {
@@ -117,9 +122,6 @@ const mapDispatchToProps = (dispatch) => ({
     },
     requestCity(value) {
         dispatch(requestCity(value))
-    },
-    getItemsInBrains() {
-        dispatch(getItemsInBrains())
     }
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
