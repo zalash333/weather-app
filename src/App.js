@@ -19,8 +19,8 @@ let App = ({value, items, addTextInInput, addItems, getCityLocal, runCurrentItem
     const onTextChanged = (e) => {
         let values = typeof e === 'string' ? e : e.target.value;
         values = values.replace(/[^a-zA-Z ]/g,'');
-        if(e && e.target && e.target.value.length !== values.length){
-            setErrorMessage(true)
+        if(e && e.target && e.target.value !== values){
+            setErrorMessage(true);
             return ''
         }else{
             setErrorMessage(false)
