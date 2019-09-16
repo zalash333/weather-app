@@ -9,8 +9,3 @@
 реализованна сортировка по введённым данным
 ![alt tag](https://pp.userapi.com/c851428/v851428103/131d94/DeKll0_ohkc.jpg "screen")
 При не корректном вводе города, бордер подсвечивается красным цветом
-![alt tag](https://pp.userapi.com/c851428/v851428611/125653/fixj06BMoNI.jpg "screen")
-Пример ответа нейронной сети на попытку получить погоду с некорректно введёнными данными города 
-![alt tag](https://pp.userapi.com/c851428/v851428611/12565c/kYMja7mdx3M.jpg "screen")
-![alt tag](https://pp.userapi.com/c851428/v851428611/125673/Hd_O1KULJ70.jpg "screen")
-![alt tag](https://pp.userapi.com/c851428/v851428611/12567c/NUQMaQ0VSLc.jpg "screen")
