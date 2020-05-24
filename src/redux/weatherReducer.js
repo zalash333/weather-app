@@ -45,12 +45,12 @@ const initialState = {
 export const requestCity = (value) => (dispatch) => {
     const API_KEY = "c3bd9e705a169cb812e91bad08db54bb";
     cancel && cancel();
-        axiosInstance.get(`weather?q=${value}&appid=${API_KEY}&units=metric`,{
-         cancelToken: new CancelToken(
-             function executor(c) {
-                 cancel = c;
-             })
-     })
+    axiosInstance.get(`weather?q=${value}&appid=${API_KEY}&units=metric`, {
+        cancelToken: new CancelToken(
+            function executor(c) {
+                cancel = c;
+            })
+    })
         .then(e => {
             dispatch(toggleStyleInput(true));
             dispatch(requestCityAction(e.data.name));
