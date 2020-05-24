@@ -43,14 +43,15 @@ const initialState = {
 };
 
 export const requestCity = (value) => (dispatch) => {
+
     const API_KEY = "c3bd9e705a169cb812e91bad08db54bb";
     cancel && cancel();
-        axiosInstance.get(`weather?q=${value}&appid=${API_KEY}&units=metric`,{
-         cancelToken: new CancelToken(
-             function executor(c) {
-                 cancel = c;
-             })
-     })
+    axiosInstance.get(`weather?q=${value}&appid=${API_KEY}&units=metric`, {
+        cancelToken: new CancelToken(
+            function executor(c) {
+                cancel = c;
+            })
+    })
         .then(e => {
             dispatch(toggleStyleInput(true));
             dispatch(requestCityAction(e.data.name));
@@ -73,9 +74,12 @@ export const getCityLocal = () => (dispatch) => {
 };
 
 export const addItems = () => (dispatch, getState) => {
+
     let bool = getState().weather.styleInput;
-    let value = getState().weather.valueInput;
+    let value = getState().weather.valueInput
     let items = getState().weather.items;
+
+
     if (bool) {
         let check = items.filter(e => e.value === value).length;
         if (!check) dispatch(addItemsAction());
